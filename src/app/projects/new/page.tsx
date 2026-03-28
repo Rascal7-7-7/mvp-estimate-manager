@@ -4,13 +4,13 @@ export const metadata = { title: "顧客・案件登録 | 見積管理" };
 
 export default function NewProjectPage() {
   return (
-    <div className="p-8 md:p-10 max-w-4xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 lg:p-10 max-w-4xl mx-auto pb-28 md:pb-10">
       {/* ページヘッダー */}
       <div className="mb-10 text-center">
         <span className="text-on-primary-container font-bold tracking-widest text-xs mb-2 block font-headline">
           STEP 01
         </span>
-        <h1 className="text-3xl md:text-4xl font-bold font-headline text-primary mb-3 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline text-primary mb-3 tracking-tight">
           顧客・案件登録
         </h1>
         <p className="text-secondary text-sm max-w-md mx-auto leading-relaxed">

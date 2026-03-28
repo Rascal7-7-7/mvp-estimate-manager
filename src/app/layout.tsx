@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import Sidebar, { MobileBottomNav } from "@/components/Sidebar";
 
 export const metadata: Metadata = {
   title: "見積管理",
@@ -14,13 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="bg-surface text-on-surface overflow-hidden">
-        <div className="flex h-screen">
+      <body className="bg-surface text-on-surface">
+        <div className="flex h-screen overflow-hidden">
           <Sidebar />
           <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
             {/* トップバー */}
-            <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 h-16 bg-white/80 backdrop-blur-xl shadow-sm shrink-0">
-              <h2 className="text-base font-bold text-slate-900 tracking-tight font-headline">
+            <header className="sticky top-0 z-40 flex justify-between items-center w-full px-4 md:px-8 h-14 md:h-16 bg-white/80 backdrop-blur-xl shadow-sm shrink-0">
+              <h2 className="text-sm md:text-base font-bold text-slate-900 tracking-tight font-headline">
                 見積管理システム
               </h2>
               <div className="flex items-center gap-3">
@@ -41,11 +41,12 @@ export default function RootLayout({
             </header>
 
             {/* メインコンテンツ */}
-            <main className="flex-1 overflow-y-auto custom-scrollbar">
+            <main className="flex-1 overflow-y-auto custom-scrollbar pb-20 md:pb-0">
               {children}
             </main>
           </div>
         </div>
+        <MobileBottomNav />
       </body>
     </html>
   );

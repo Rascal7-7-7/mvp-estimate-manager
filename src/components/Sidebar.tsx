@@ -64,3 +64,42 @@ export default function Sidebar() {
     </aside>
   );
 }
+
+export function MobileBottomNav() {
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === "/estimates") return pathname === "/estimates";
+    return pathname.startsWith(href);
+  };
+
+  return (
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-slate-200 flex items-center justify-around px-2 pb-safe">
+      {navItems.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={cn(
+            "flex flex-col items-center gap-0.5 py-2 px-4 min-w-0 flex-1 transition-colors duration-150",
+            isActive(item.href)
+              ? "text-slate-900"
+              : "text-slate-400"
+          )}
+        >
+          <span className={cn(
+            "material-symbols-outlined text-2xl",
+            isActive(item.href) && "text-primary"
+          )}>
+            {item.icon}
+          </span>
+          <span className={cn(
+            "text-[10px] font-bold truncate w-full text-center",
+            isActive(item.href) ? "text-primary" : "text-slate-400"
+          )}>
+            {item.label}
+          </span>
+        </Link>
+      ))}
+    </nav>
+  );
+}

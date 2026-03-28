@@ -70,9 +70,9 @@ export default function EstimateForm({ projects, defaultProjectId }: Props) {
   };
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-col lg:flex-row flex-1 overflow-y-auto lg:overflow-hidden">
       {/* 左：入力エリア */}
-      <section className="w-[46%] flex flex-col bg-surface-container-low p-8 overflow-y-auto custom-scrollbar">
+      <section className="w-full lg:w-[46%] flex flex-col bg-surface-container-low p-4 sm:p-6 lg:p-8 lg:overflow-y-auto custom-scrollbar">
         <div className="max-w-xl mx-auto w-full space-y-6">
           {/* ヘッダー */}
           <div className="flex items-center justify-between">
@@ -203,7 +203,7 @@ export default function EstimateForm({ projects, defaultProjectId }: Props) {
       </section>
 
       {/* 右：見積プレビュー */}
-      <section className="flex-1 bg-surface p-10 overflow-y-auto custom-scrollbar flex flex-col items-center">
+      <section className="flex-1 bg-surface p-4 sm:p-6 lg:p-10 lg:overflow-y-auto custom-scrollbar flex flex-col items-center">
         <div className="w-full max-w-2xl space-y-6">
           {/* 合計金額ヒーロー */}
           <div className="bg-primary rounded-2xl p-8 text-white relative overflow-hidden shadow-xl">
@@ -316,7 +316,7 @@ export default function EstimateForm({ projects, defaultProjectId }: Props) {
       </section>
 
       {/* 固定フッター：保存ボタン */}
-      <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass-effect border border-white/20 shadow-2xl px-8 py-3.5 rounded-full flex items-center gap-6">
+      <footer className="fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-50 glass-effect border border-white/20 shadow-2xl px-5 sm:px-8 py-3 sm:py-3.5 rounded-full flex items-center gap-4 sm:gap-6">
         <div className="flex items-center gap-2 pr-6 border-r border-outline-variant/30">
           <div className="w-2 h-2 rounded-full bg-tertiary-fixed-dim" />
           <span className="text-xs font-medium text-on-surface-variant">

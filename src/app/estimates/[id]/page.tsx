@@ -35,7 +35,7 @@ export default async function EstimateDetailPage({ params }: Props) {
   const available = nextStatuses[estimate.status];
 
   return (
-    <div className="p-8 md:p-10 max-w-5xl mx-auto pb-24">
+    <div className="p-4 sm:p-6 md:p-8 lg:p-10 max-w-5xl mx-auto pb-32 md:pb-24">
       {/* ナビゲーション & アクション */}
       <div className="flex items-center justify-between mb-6">
         <Link
@@ -57,8 +57,8 @@ export default async function EstimateDetailPage({ params }: Props) {
       </div>
 
       {/* ステータス & 金額サマリー */}
-      <div className="bg-surface-container-lowest border border-slate-200 rounded-xl p-5 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
-        <div className="flex items-center gap-4">
+      <div className="bg-surface-container-lowest border border-slate-200 rounded-xl p-4 sm:p-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-sm">
+        <div className="flex items-center gap-3 sm:gap-4">
           <StatusBadge status={estimate.status} />
           <div>
             <p className="font-bold text-slate-900 text-sm">
@@ -69,13 +69,13 @@ export default async function EstimateDetailPage({ params }: Props) {
             </p>
           </div>
         </div>
-        <div className="text-right">
+        <div className="text-left sm:text-right">
           <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mb-0.5">
             お見積総額（税抜）
           </p>
-          <div className="flex items-baseline justify-end gap-1">
+          <div className="flex items-baseline gap-1">
             <span className="text-sm font-bold text-primary">¥</span>
-            <span className="text-4xl font-headline font-extrabold text-primary tracking-tighter leading-none">
+            <span className="text-3xl sm:text-4xl font-headline font-extrabold text-primary tracking-tighter leading-none">
               {Number(estimate.total_amount).toLocaleString("ja-JP")}
             </span>
           </div>
@@ -83,11 +83,11 @@ export default async function EstimateDetailPage({ params }: Props) {
       </div>
 
       {/* 見積書（帳票風） */}
-      <div className="bg-white shadow-xl rounded-sm p-12 border border-slate-100">
+      <div className="bg-white shadow-xl rounded-sm p-5 sm:p-8 md:p-12 border border-slate-100">
         {/* 書類ヘッダー */}
-        <div className="flex justify-between items-start mb-14">
+        <div className="flex justify-between items-start mb-8 sm:mb-14">
           <div>
-            <h3 className="text-4xl font-bold font-headline tracking-[0.15em] text-slate-900 border-b-4 border-slate-900 pb-2 mb-1">
+            <h3 className="text-2xl sm:text-4xl font-bold font-headline tracking-[0.1em] sm:tracking-[0.15em] text-slate-900 border-b-4 border-slate-900 pb-2 mb-1">
               御見積書
             </h3>
             <p className="text-slate-400 text-xs font-medium tracking-widest">
@@ -95,20 +95,20 @@ export default async function EstimateDetailPage({ params }: Props) {
             </p>
           </div>
           <div className="text-right">
-            <p className="text-sm font-bold text-slate-900 mb-1">
+            <p className="text-xs sm:text-sm font-bold text-slate-900 mb-1">
               見積番号：
               <span className="font-headline">
                 EST-{String(estimate.id).padStart(4, "0")}
               </span>
             </p>
-            <p className="text-sm text-slate-500">
+            <p className="text-xs sm:text-sm text-slate-500">
               発行日：{formatDate(estimate.created_at)}
             </p>
           </div>
         </div>
 
         {/* 顧客情報 & 案件情報 */}
-        <div className="grid grid-cols-2 gap-10 mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10 mb-8 sm:mb-14">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-1">
               請求先
@@ -219,8 +219,8 @@ export default async function EstimateDetailPage({ params }: Props) {
 
       {/* ステータス変更フローター */}
       {available.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass-effect border border-white/20 shadow-2xl px-6 py-3.5 rounded-full flex items-center gap-5">
-          <div className="flex items-center gap-2 pr-5 border-r border-outline-variant/30">
+        <div className="fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-50 glass-effect border border-white/20 shadow-2xl px-4 sm:px-6 py-3 sm:py-3.5 rounded-full flex items-center gap-3 sm:gap-5 max-w-[calc(100vw-2rem)]">
+          <div className="hidden sm:flex items-center gap-2 pr-5 border-r border-outline-variant/30">
             <div className="w-2 h-2 rounded-full bg-tertiary-fixed-dim" />
             <span className="text-xs font-bold text-on-surface-variant">
               承認済みドキュメント

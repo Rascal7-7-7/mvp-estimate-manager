@@ -41,3 +41,8 @@ body {
   background: #e4e2e5;
   border-radius: 10px;
 }
+
+/* iOS safe area for bottom navigation */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
