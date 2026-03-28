@@ -25,7 +25,7 @@ export default function Sidebar() {
         <h1 className="text-xl font-bold text-slate-900 tracking-tight font-headline">
           見積管理
         </h1>
-        <p className="text-xs text-slate-500 font-medium">Digital Curator</p>
+        <p className="text-xs text-slate-500 font-medium">営業自動化ツール</p>
       </div>
 
       {/* ナビゲーション */}
