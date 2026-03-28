@@ -60,7 +60,7 @@ export default function NewProjectPage() {
             {/* 顧客情報 */}
             <section className="bg-surface-container-lowest rounded-xl p-6 md:p-8 border border-slate-100 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center">
+                <div className="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden shrink-0">
                   <span className="material-symbols-outlined text-primary text-xl">
                     person
                   </span>
@@ -125,7 +125,7 @@ export default function NewProjectPage() {
             {/* 案件情報 */}
             <section className="bg-surface-container-lowest rounded-xl p-6 md:p-8 border border-slate-100 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center">
+                <div className="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden shrink-0">
                   <span className="material-symbols-outlined text-primary text-xl">
                     assignment
                   </span>
