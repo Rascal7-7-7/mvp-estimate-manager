@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
-  title: "見積管理アプリ",
+  title: "見積管理",
   description: "顧客・案件に紐づいた見積を一覧で管理できる業務アプリ",
 };
 
@@ -14,9 +14,38 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="min-h-screen bg-slate-50">
-        <Navbar />
-        <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
+      <body className="bg-surface text-on-surface overflow-hidden">
+        <div className="flex h-screen">
+          <Sidebar />
+          <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+            {/* トップバー */}
+            <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 h-16 bg-white/80 backdrop-blur-xl shadow-sm shrink-0">
+              <h2 className="text-base font-bold text-slate-900 tracking-tight font-headline">
+                見積管理システム
+              </h2>
+              <div className="flex items-center gap-3">
+                <div className="hidden md:flex items-center bg-surface-container px-3 py-1.5 rounded-full">
+                  <span className="material-symbols-outlined text-slate-400 text-sm mr-2">
+                    search
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="見積を検索..."
+                    className="bg-transparent border-none focus:ring-0 text-sm w-40 font-body"
+                  />
+                </div>
+                <button className="text-slate-500 hover:opacity-80 transition-opacity">
+                  <span className="material-symbols-outlined">notifications</span>
+                </button>
+              </div>
+            </header>
+
+            {/* メインコンテンツ */}
+            <main className="flex-1 overflow-y-auto custom-scrollbar">
+              {children}
+            </main>
+          </div>
+        </div>
       </body>
     </html>
   );

@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getProjects } from "@/lib/actions";
 import EstimateForm from "./EstimateForm";
 
-export const metadata = { title: "見積作成 | 見積管理" };
+export const metadata = { title: "新規見積作成 | 見積管理" };
 
 interface Props {
   searchParams: Promise<{ project_id?: string }>;
@@ -21,11 +21,12 @@ export default async function NewEstimatePage({ searchParams }: Props) {
     : projects[0].id;
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">見積作成</h1>
-        <p className="text-gray-500 mt-1 text-sm">
-          案件を選択し、見積項目を追加してください。金額は自動で計算されます。
+    <div className="flex flex-col h-full">
+      {/* サブヘッダー */}
+      <div className="px-8 py-4 border-b border-surface-container bg-surface-container-lowest shrink-0">
+        <p className="text-xs text-on-surface-variant">
+          <span className="font-bold text-primary">STEP 02</span>
+          　—　見積項目を入力して、右のプレビューで内容を確認してください。
         </p>
       </div>
       <EstimateForm projects={projects} defaultProjectId={selectedProjectId} />

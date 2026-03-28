@@ -3,8 +3,8 @@ import Link from "next/link";
 import { getEstimateDetail, updateEstimateStatus } from "@/lib/actions";
 import StatusBadge from "@/components/StatusBadge";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import type { EstimateStatus } from "@/types";
 import { STATUS_LABELS } from "@/types";
+import type { EstimateStatus } from "@/types";
 
 export const dynamic = "force-dynamic";
 
@@ -35,143 +35,230 @@ export default async function EstimateDetailPage({ params }: Props) {
   const available = nextStatuses[estimate.status];
 
   return (
-    <div className="max-w-3xl mx-auto">
-      {/* 戻るリンク */}
-      <div className="mb-6">
+    <div className="p-8 md:p-10 max-w-5xl mx-auto pb-24">
+      {/* ナビゲーション & アクション */}
+      <div className="flex items-center justify-between mb-6">
         <Link
           href="/estimates"
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-on-surface-variant hover:text-on-surface transition-colors font-medium"
         >
-          ← 見積一覧に戻る
+          <span className="material-symbols-outlined text-base">arrow_back</span>
+          一覧へ戻る
         </Link>
+        <div className="flex gap-3">
+          <Link
+            href={`/estimates/new?project_id=${estimate.project_id}`}
+            className="inline-flex items-center gap-2 bg-surface-container-lowest text-primary border border-outline-variant px-4 py-2 rounded-lg font-bold text-sm hover:bg-surface-container transition-colors"
+          >
+            <span className="material-symbols-outlined text-base">edit</span>
+            この案件で新規作成
+          </Link>
+        </div>
       </div>
 
-      {/* 見積書ヘッダー */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        {/* タイトルバー */}
-        <div className="bg-blue-600 px-8 py-5 text-white flex items-center justify-between">
+      {/* ステータス & 金額サマリー */}
+      <div className="bg-surface-container-lowest border border-slate-200 rounded-xl p-5 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+        <div className="flex items-center gap-4">
+          <StatusBadge status={estimate.status} />
           <div>
-            <p className="text-blue-200 text-xs font-medium mb-1">見積書</p>
-            <h1 className="text-xl font-bold">No. {String(estimate.id).padStart(4, "0")}</h1>
-          </div>
-          <div className="text-right">
-            <StatusBadge status={estimate.status} />
-            <p className="text-blue-200 text-xs mt-2">
+            <p className="font-bold text-slate-900 text-sm">
+              EST-{String(estimate.id).padStart(4, "0")}
+            </p>
+            <p className="text-xs text-slate-500">
               作成日：{formatDate(estimate.created_at)}
             </p>
           </div>
         </div>
+        <div className="text-right">
+          <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mb-0.5">
+            お見積総額（税抜）
+          </p>
+          <div className="flex items-baseline justify-end gap-1">
+            <span className="text-sm font-bold text-primary">¥</span>
+            <span className="text-4xl font-headline font-extrabold text-primary tracking-tighter leading-none">
+              {Number(estimate.total_amount).toLocaleString("ja-JP")}
+            </span>
+          </div>
+        </div>
+      </div>
 
-        {/* 本文 */}
-        <div className="p-8 space-y-8">
-          {/* 顧客・案件情報 */}
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
-                顧客情報
-              </h2>
-              <p className="font-semibold text-gray-900 text-lg leading-tight">
-                {estimate.customer_name} 様
+      {/* 見積書（帳票風） */}
+      <div className="bg-white shadow-xl rounded-sm p-12 border border-slate-100">
+        {/* 書類ヘッダー */}
+        <div className="flex justify-between items-start mb-14">
+          <div>
+            <h3 className="text-4xl font-bold font-headline tracking-[0.15em] text-slate-900 border-b-4 border-slate-900 pb-2 mb-1">
+              御見積書
+            </h3>
+            <p className="text-slate-400 text-xs font-medium tracking-widest">
+              QUOTATION DOCUMENT
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm font-bold text-slate-900 mb-1">
+              見積番号：
+              <span className="font-headline">
+                EST-{String(estimate.id).padStart(4, "0")}
+              </span>
+            </p>
+            <p className="text-sm text-slate-500">
+              発行日：{formatDate(estimate.created_at)}
+            </p>
+          </div>
+        </div>
+
+        {/* 顧客情報 & 案件情報 */}
+        <div className="grid grid-cols-2 gap-10 mb-14">
+          <div>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-1">
+              請求先
+            </p>
+            <h4 className="text-xl font-bold text-slate-900 mb-1">
+              {estimate.customer_name} 御中
+            </h4>
+            {estimate.company_name && (
+              <p className="text-slate-600 text-sm mb-3">
+                {estimate.company_name}
               </p>
-              {estimate.company_name && (
-                <p className="text-gray-500 text-sm">{estimate.company_name}</p>
-              )}
-              {estimate.email && (
-                <p className="text-gray-500 text-sm mt-1">{estimate.email}</p>
-              )}
-              {estimate.phone && (
-                <p className="text-gray-500 text-sm">{estimate.phone}</p>
-              )}
-            </div>
-            <div>
-              <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
-                案件情報
-              </h2>
-              <p className="font-semibold text-gray-900">{estimate.project_name}</p>
+            )}
+            {estimate.email && (
+              <p className="text-sm text-slate-500">{estimate.email}</p>
+            )}
+            {estimate.phone && (
+              <p className="text-sm text-slate-500">{estimate.phone}</p>
+            )}
+            <div className="mt-4 bg-slate-50 p-4 border-l-4 border-primary">
+              <p className="text-[10px] text-slate-400 mb-1">案件名</p>
+              <p className="font-bold text-slate-900 text-sm">
+                {estimate.project_name}
+              </p>
               {estimate.project_description && (
-                <p className="text-gray-500 text-sm mt-1 leading-relaxed">
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
                   {estimate.project_description}
                 </p>
               )}
             </div>
           </div>
-
-          {/* 見積項目テーブル */}
-          <div>
-            <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">
-              見積項目
-            </h2>
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-gray-50 border-y border-gray-200">
-                  <th className="text-left px-4 py-2.5 text-gray-600 font-medium">項目名</th>
-                  <th className="text-right px-4 py-2.5 text-gray-600 font-medium">単価</th>
-                  <th className="text-center px-4 py-2.5 text-gray-600 font-medium">数量</th>
-                  <th className="text-right px-4 py-2.5 text-gray-600 font-medium">小計</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {estimate.items.map((item) => (
-                  <tr key={item.id}>
-                    <td className="px-4 py-3">
-                      <p className="text-gray-900 font-medium">{item.item_name}</p>
-                      {item.note && (
-                        <p className="text-gray-400 text-xs mt-0.5">{item.note}</p>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-right text-gray-700 tabular-nums">
-                      {formatCurrency(Number(item.unit_price))}
-                    </td>
-                    <td className="px-4 py-3 text-center text-gray-700">
-                      {item.quantity}
-                    </td>
-                    <td className="px-4 py-3 text-right font-medium text-gray-900 tabular-nums">
-                      {formatCurrency(Number(item.subtotal))}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* 合計金額 */}
-            <div className="border-t-2 border-gray-900 mt-2 pt-3 flex justify-end">
-              <div className="text-right">
-                <p className="text-sm text-gray-500 mb-0.5">合計金額（税抜）</p>
-                <p className="text-3xl font-bold text-blue-700 tabular-nums">
-                  {formatCurrency(Number(estimate.total_amount))}
-                </p>
+          <div className="text-right">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-1 text-right">
+              発行元
+            </p>
+            <h4 className="text-base font-bold text-slate-900 mb-1">
+              Digital Curator
+            </h4>
+            <div className="flex justify-end mt-6">
+              <div className="w-16 h-16 border-2 border-slate-200 rounded-full flex items-center justify-center text-slate-300 text-[10px] font-bold rotate-12 text-center p-1 select-none">
+                印影省略
               </div>
             </div>
           </div>
+        </div>
 
-          {/* ステータス変更 */}
-          {available.length > 0 && (
-            <div className="border-t border-gray-200 pt-6">
-              <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">
-                ステータス変更
-              </h2>
-              <div className="flex gap-3 flex-wrap">
-                {available.map((status) => (
-                  <form
-                    key={status}
-                    action={async () => {
-                      "use server";
-                      await updateEstimateStatus(numId, status);
-                    }}
-                  >
-                    <button
-                      type="submit"
-                      className="px-5 py-2 rounded-lg border-2 border-gray-300 text-sm font-medium text-gray-700 hover:border-blue-500 hover:text-blue-600 transition-colors"
-                    >
-                      {STATUS_LABELS[status]} に変更
-                    </button>
-                  </form>
-                ))}
-              </div>
+        {/* 見積項目テーブル */}
+        <div className="mb-10">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-900 text-white">
+                <th className="py-3 px-4 text-xs font-bold uppercase">
+                  項目 / 仕様
+                </th>
+                <th className="py-3 px-4 text-xs font-bold uppercase text-right w-32">
+                  単価
+                </th>
+                <th className="py-3 px-4 text-xs font-bold uppercase text-center w-20">
+                  数量
+                </th>
+                <th className="py-3 px-4 text-xs font-bold uppercase text-right w-36">
+                  小計
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {estimate.items.map((item) => (
+                <tr key={item.id}>
+                  <td className="py-5 px-4">
+                    <p className="font-bold text-slate-900 mb-0.5">
+                      {item.item_name}
+                    </p>
+                    {item.note && (
+                      <p className="text-xs text-slate-400">{item.note}</p>
+                    )}
+                  </td>
+                  <td className="py-5 px-4 text-right font-headline font-bold text-slate-900 tabular-nums">
+                    {formatCurrency(Number(item.unit_price))}
+                  </td>
+                  <td className="py-5 px-4 text-center text-slate-600">
+                    {item.quantity}
+                  </td>
+                  <td className="py-5 px-4 text-right font-headline font-bold text-slate-900 tabular-nums">
+                    {formatCurrency(Number(item.subtotal))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* 合計 */}
+        <div className="flex justify-end pt-6 border-t-2 border-slate-900">
+          <div className="w-72 space-y-3">
+            <div className="flex justify-between items-center bg-slate-50 p-4 border-y-2 border-slate-900">
+              <span className="text-sm font-bold text-slate-900">
+                合計金額（税抜）
+              </span>
+              <span className="text-2xl font-headline font-extrabold text-slate-900 tabular-nums">
+                {formatCurrency(Number(estimate.total_amount))}
+              </span>
             </div>
-          )}
+            <p className="text-[10px] text-slate-400 px-1 leading-relaxed">
+              ※お支払い手数料はお客様にてご負担ください。
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* ステータス変更フローター */}
+      {available.length > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass-effect border border-white/20 shadow-2xl px-6 py-3.5 rounded-full flex items-center gap-5">
+          <div className="flex items-center gap-2 pr-5 border-r border-outline-variant/30">
+            <div className="w-2 h-2 rounded-full bg-tertiary-fixed-dim" />
+            <span className="text-xs font-bold text-on-surface-variant">
+              承認済みドキュメント
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            {available.map((status) => (
+              <form
+                key={status}
+                action={async () => {
+                  "use server";
+                  await updateEstimateStatus(numId, status);
+                }}
+              >
+                <button
+                  type="submit"
+                  className={
+                    status === "approved"
+                      ? "bg-tertiary-fixed text-on-tertiary-fixed px-5 py-2.5 rounded-full text-sm font-bold hover:brightness-95 active:scale-95 transition-all inline-flex items-center gap-1.5 shadow-lg"
+                      : "bg-surface-container-lowest text-on-surface border border-outline-variant px-5 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container active:scale-95 transition-all inline-flex items-center gap-1.5"
+                  }
+                >
+                  <span className="material-symbols-outlined text-base">
+                    {status === "approved"
+                      ? "check_circle"
+                      : status === "rejected"
+                      ? "cancel"
+                      : status === "sent"
+                      ? "mark_email_read"
+                      : "edit"}
+                  </span>
+                  {STATUS_LABELS[status]} に変更
+                </button>
+              </form>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
