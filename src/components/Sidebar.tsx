@@ -41,8 +41,8 @@ export default function Sidebar() {
                 : "text-slate-500 font-medium hover:bg-slate-200/50"
             )}
           >
-            <span className="material-symbols-outlined text-xl">{item.icon}</span>
-            <span>{item.label}</span>
+            <span className="material-symbols-outlined text-xl shrink-0">{item.icon}</span>
+            <span className="whitespace-nowrap">{item.label}</span>
           </Link>
         ))}
       </nav>
