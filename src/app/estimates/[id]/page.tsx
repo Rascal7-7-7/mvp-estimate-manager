@@ -48,10 +48,10 @@ export default async function EstimateDetailPage({ params }: Props) {
         <div className="flex gap-3">
           <Link
             href={`/estimates/new?project_id=${estimate.project_id}`}
-            className="inline-flex items-center gap-2 bg-surface-container-lowest text-primary border border-outline-variant px-4 py-2 rounded-lg font-bold text-sm hover:bg-surface-container transition-colors"
+            className="inline-flex items-center gap-2 bg-surface-container-lowest text-on-surface-variant border border-outline-variant px-4 py-2 rounded-lg text-sm hover:bg-surface-container transition-colors"
           >
-            <span className="material-symbols-outlined text-base">edit</span>
-            この案件で新規作成
+            <span className="material-symbols-outlined text-base">add</span>
+            <span className="hidden sm:inline">再見積を作成</span>
           </Link>
         </div>
       </div>

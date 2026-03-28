@@ -282,9 +282,11 @@ export default function EstimateForm({ projects, defaultProjectId }: Props) {
                     className="grid grid-cols-12 gap-3 py-4 border-b border-outline-variant/30 items-center"
                   >
                     <div className="col-span-6">
-                      <p className="font-bold text-sm text-on-surface">
-                        {item.item_name || `項目 ${i + 1}`}
-                      </p>
+                      {item.item_name ? (
+                        <p className="font-bold text-sm text-on-surface">{item.item_name}</p>
+                      ) : (
+                        <p className="text-sm text-outline italic">未入力</p>
+                      )}
                     </div>
                     <div className="col-span-2 text-right text-sm font-headline">
                       {Number(item.quantity) || 1}

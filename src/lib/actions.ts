@@ -148,7 +148,9 @@ export async function getEstimateSummary(): Promise<EstimateSummary> {
     const count = parseInt(row.count, 10);
     summary[row.status] = count;
     summary.total += count;
-    summary.total_amount += parseFloat(row.amount);
+    if (row.status === "approved") {
+      summary.total_amount = parseFloat(row.amount);
+    }
   }
 
   return summary;

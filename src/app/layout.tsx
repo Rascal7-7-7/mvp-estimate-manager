@@ -34,9 +34,6 @@ export default function RootLayout({
                     className="bg-transparent border-none focus:ring-0 text-sm w-40 font-body"
                   />
                 </div>
-                <button className="text-slate-500 hover:opacity-80 transition-opacity">
-                  <span className="material-symbols-outlined">notifications</span>
-                </button>
               </div>
             </header>
 
